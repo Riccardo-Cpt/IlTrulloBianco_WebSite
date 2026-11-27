@@ -62,6 +62,14 @@ npx wrangler pages deploy out --project-name il-trullo-bianco
 ```
 Al primo utilizzo `wrangler` chiede di fare il login a Cloudflare nel browser.
 
+### Opzione C – Workers Builds (Connect to Git da "Workers")
+Se Cloudflare segnala che wrangler non è stato rilevato, il progetto è stato creato con il flusso Workers. Il file `wrangler.jsonc` (già nel repository) pubblica la cartella `out/`. Parametri da usare:
+- **Build command:** `npm run export`
+- **Deploy command:** `npx wrangler deploy`
+- **Variabile d'ambiente:** `NODE_VERSION` = `22`
+
+> ⚠️ **Attenzione al Build command.** Deve essere `npm run export`, non il predefinito `npm run build`: solo `export` crea la cartella `out/`. Se resta `npm run build`, il deploy fallisce con l'errore *"directory specified by the asset.directory field ... does not exist: /opt/buildhome/repo/out"*. In quel caso correggi il comando in **Settings → Build** e premi **Retry deployment**.
+
 ### Dominio personalizzato
 Nel progetto Pages: **Custom domains** → **Set up a custom domain** e segui le istruzioni DNS. Se il dominio è gestito da Cloudflare, il record viene creato automaticamente. Aggiorna poi `url` in `src/lib/siteConfig.ts`.
 
